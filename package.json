@@ -1,0 +1,11 @@
+{
+  "name": "filmuz",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node map-server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
