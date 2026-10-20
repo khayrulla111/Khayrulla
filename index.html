@@ -423,40 +423,6 @@ html[lang="uz"] .hero .button.small{font-size:13px}
 <style id="section-backgrounds">body[data-active-page="map"],body[data-active-page="projects"],body[data-active-page="profile"]{background:var(--bg)}#locationsPage .eyebrow{color:#202923}        /* Map labels use the dark overlay as contrast against the light map tiles. */
     .map-view .map-label,.map-view .map-label span{color:#fff}
     #mapView .map-place h4,#mapPage .map-place h4{color:#fff}
-
-    /* Project status badges use a soft, high-contrast palette over every cover image. */
-    .project-state{display:inline-flex;align-items:center;gap:7px;min-height:27px;padding:7px 10px;border:1px solid #c4d8c3;border-radius:999px;background:rgba(244,249,241,.97);color:#294b34;font-size:10px;font-weight:700;line-height:1;letter-spacing:.01em;box-shadow:0 3px 11px rgba(25,49,30,.18);backdrop-filter:blur(8px)}
-    .project-state:before{width:7px;height:7px;margin:0;background:#5d9364;box-shadow:0 0 0 3px rgba(93,147,100,.16)}
-    .project-state.is-filming{border-color:#ead39e;background:rgba(255,247,226,.98);color:#6a4d1f}
-    .project-state.is-filming:before{background:#c4862d;box-shadow:0 0 0 3px rgba(196,134,45,.16)}
-    .project-state.is-completed{border-color:#bfd4d8;background:rgba(237,246,247,.98);color:#315a63}
-    .project-state.is-completed:before{background:#4f8994;box-shadow:0 0 0 3px rgba(79,137,148,.16)}
-
-    /* Make the form close control easy to spot against the light sign-in card. */
-    #formContent>.modal-close{top:14px;right:14px;width:42px;height:42px;border:1px solid #315d40;background:#426f50;color:#fff;box-shadow:0 4px 14px rgba(28,65,41,.24);transition:background .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease}
-    #formContent>.modal-close svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.5}
-    #formContent>.modal-close:hover{background:#315d40;border-color:#254b31;transform:scale(1.06);box-shadow:0 6px 17px rgba(28,65,41,.3)}
-    #formContent>.modal-close:focus-visible{outline:3px solid rgba(68,119,81,.42);outline-offset:3px}
-
-    /* Give the mobile hero a calmer, legible layout with room for both location labels. */
-    @media(max-width:760px){
-      #locationsPage .hero{height:auto;min-height:370px;padding:60px 17px 60px;align-items:flex-end;border-radius:24px}
-      #locationsPage .hero:before{background:linear-gradient(180deg,rgba(9,15,11,.28),rgba(8,13,10,.12) 30%,rgba(8,13,10,.68) 100%),linear-gradient(90deg,rgba(7,9,8,.55),rgba(7,9,8,.08)),url('samarkand-evening-4k.jpg') 58% center/cover}
-      #locationsPage .hero-content{z-index:1;width:100%;max-width:440px;padding:16px 17px 15px;border:1px solid rgba(255,255,255,.18);border-radius:18px;background:rgba(20,29,23,.63);box-shadow:0 12px 30px rgba(0,0,0,.18);backdrop-filter:blur(10px)}
-      #locationsPage .hero-kicker{font-size:9px;letter-spacing:.13em}
-      #locationsPage .hero h2{font-size:clamp(31px,8vw,40px);line-height:1.03;margin:10px 0 8px;max-width:12ch}
-      #locationsPage .hero p{font-size:13px;line-height:1.5;max-width:34ch;margin-bottom:14px}
-      #locationsPage #heroExplore{min-height:42px;border-radius:12px}
-      #locationsPage .hero-photo-credit{top:13px;right:13px;bottom:auto;left:auto;max-width:calc(100% - 26px);padding:7px 9px;font-size:9px}
-      #locationsPage .hero-note{left:13px;right:13px;bottom:13px;justify-content:center;width:auto;min-height:34px;padding:7px 10px;font-size:10px;text-align:center;white-space:normal}
-    }
-    @media(max-width:390px){
-      #locationsPage .hero{min-height:350px;padding:55px 13px 57px}
-      #locationsPage .hero-content{padding:14px 14px 13px;border-radius:16px}
-      #locationsPage .hero h2{font-size:clamp(29px,8.4vw,34px)}
-      #locationsPage .hero p{font-size:12px;max-width:31ch}
-      #locationsPage .hero-photo-credit{padding:6px 8px;font-size:8px}
-    }
     </style></head>
 <body>
 <div class="page-loader" id="pageLoader" role="status" aria-live="polite">
@@ -551,7 +517,7 @@ async function openAuthModal(){$('#formContent').innerHTML=`<button class="modal
 async function restoreGoogleSession(){try{const response=await fetch('/api/me',{cache:'no-store',credentials:'same-origin'});if(response.ok){const data=await response.json();if(data.user)applyAuthenticatedUser(data.user)}}catch{}}
 async function logoutGoogleAccount(){try{await fetch('/api/logout',{method:'POST',credentials:'same-origin'});applyAuthenticatedUser(null);toast('Вы вышли из аккаунта')}catch{toast('Не удалось завершить сеанс')}}
 function openProjectForm(){ $('#formContent').innerHTML=`<button class="modal-close" data-close="form" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg></button><div class="eyebrow">Новый проект</div><h2>Ваша следующая история</h2><p>Создайте проект и начните собирать съёмочный план.</p><form id="projectForm"><div class="form-field"><label for="projectName">Название проекта</label><input id="projectName" name="name" required maxlength="70" placeholder="Например: Последний автобус"></div><div class="form-field"><label for="projectType">Жанр</label><select id="projectType" name="type"><option>Драма</option><option>Исторический</option><option>Документальный</option><option>Романтика</option><option>Экшен</option></select></div><div class="form-field"><label for="projectDesc">Описание</label><textarea id="projectDesc" name="description" placeholder="Коротко опишите идею фильма…"></textarea></div><div class="form-actions"><button type="button" class="button secondary small" data-close="form">Отмена</button><button class="button small" type="submit">Создать проект</button></div></form>`;$('#formModal').classList.add('open');document.body.style.overflow='hidden';$('#projectName').focus() }
-  function renderProjects(){const grid=$('#projectGrid');let data=state.projects;if(state.projectFilter!=='Все')data=data.filter(x=>x.status===state.projectFilter);const examples=[{name:'Последний автобус',type:'Short film',status:'В разработке',progress:68,image:'photo-1533105079780-92b9be482077',places:4,date:'12 окт. 2026'},{name:'Самарканд, 1998',type:'Драма',status:'Съёмки',progress:35,image:'local:samarkand-evening-4k.jpg',places:6,date:'18 окт. 2026'},{name:'Без слов',type:'Experimental',status:'Завершено',progress:100,image:'photo-1464822759023-fed622ff2c3b',places:3,date:'2 сен. 2026'}];if(!state.projects.length)data=examples.filter(x=>state.projectFilter==='Все'||x.status===state.projectFilter);grid.innerHTML=data.map((p,i)=>`<article class="project-card"><div class="project-image"><img src="${img(p.image,650)}" alt="${escapeHtml(p.name)}"><span class="project-state ${p.status==="Съёмки"?"is-filming":p.status==="Завершено"?"is-completed":"is-development"}">${escapeHtml(p.status)}</span></div><div class="project-content"><h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(p.type||'Кинопроект')} · ${p.places||state.route.length||2} локации</p><div class="project-progress"><div class="progress-top"><span>Подготовка</span><span>${p.progress||0}%</span></div><div class="progress"><span style="width:${p.progress||0}%"></span></div></div><div class="project-footer"><span>${escapeHtml(p.date||'Дата не выбрана')}</span><div class="avatars"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=60&q=70" alt="Участник"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=60&q=70" alt="Участник"></div></div></div></article>`).join('')+`<button class="new-project" id="newProjectCard"><span><span class="plus">+</span><strong style="display:block;color:#eee;font-size:13px;margin-bottom:5px">Создать проект</strong><span style="font-size:10px">Соберите свою съёмочную команду</span></span></button>`;}
+  function renderProjects(){const grid=$('#projectGrid');let data=state.projects;if(state.projectFilter!=='Все')data=data.filter(x=>x.status===state.projectFilter);const examples=[{name:'Последний автобус',type:'Short film',status:'В разработке',progress:68,image:'photo-1533105079780-92b9be482077',places:4,date:'12 окт. 2026'},{name:'Самарканд, 1998',type:'Драма',status:'Съёмки',progress:35,image:'local:samarkand-evening-4k.jpg',places:6,date:'18 окт. 2026'},{name:'Без слов',type:'Experimental',status:'Завершено',progress:100,image:'photo-1464822759023-fed622ff2c3b',places:3,date:'2 сен. 2026'}];if(!state.projects.length)data=examples.filter(x=>state.projectFilter==='Все'||x.status===state.projectFilter);grid.innerHTML=data.map((p,i)=>`<article class="project-card"><div class="project-image"><img src="${img(p.image,650)}" alt="${escapeHtml(p.name)}"><span class="project-state">${escapeHtml(p.status)}</span></div><div class="project-content"><h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(p.type||'Кинопроект')} · ${p.places||state.route.length||2} локации</p><div class="project-progress"><div class="progress-top"><span>Подготовка</span><span>${p.progress||0}%</span></div><div class="progress"><span style="width:${p.progress||0}%"></span></div></div><div class="project-footer"><span>${escapeHtml(p.date||'Дата не выбрана')}</span><div class="avatars"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=60&q=70" alt="Участник"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=60&q=70" alt="Участник"></div></div></div></article>`).join('')+`<button class="new-project" id="newProjectCard"><span><span class="plus">+</span><strong style="display:block;color:#eee;font-size:13px;margin-bottom:5px">Создать проект</strong><span style="font-size:10px">Соберите свою съёмочную команду</span></span></button>`;}
   function renderProjectEtc(){initializeMap('mapCanvasFull')}
   function toggleSave(name){if(state.saved.includes(name)){state.saved=state.saved.filter(n=>n!==name);toast('Удалено из избранного')}else{state.saved.push(name);toast('Локация сохранена')}persist();renderCards();}
   function addRoute(name){if(state.route.includes(name)){toast('Эта локация уже в маршруте');return}const save=()=>{state.route.push(name);persist();toast(`${name} добавлена в маршрут`)};if(userCoordinates){save();return}if(!navigator.geolocation){save();toast('Маршрут сохранён без определения вашего местоположения');return}navigator.geolocation.getCurrentPosition(position=>{userCoordinates={latitude:position.coords.latitude,longitude:position.coords.longitude};renderCards();save()},()=>{save();toast('Маршрут сохранён без определения вашего местоположения')},{enableHighAccuracy:false,timeout:12000,maximumAge:60000})}
@@ -795,3 +761,4 @@ document.addEventListener('click',event=>{const button=event.target.closest('[da
   })();</script>
 </body>
 </html>
+
